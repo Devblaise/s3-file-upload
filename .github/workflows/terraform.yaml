@@ -26,7 +26,9 @@ jobs:
     - name: Package Lambda Function
       run: |
         cd ../lambda
-        zip -r9 lambda_function_payload.zip lambda_function_payload.py
+        pwd
+        ls -la
+        zip -r9 lambda_function_payload.zip ./lambda_function_payload.py
         mv lambda_function_payload.zip ../terraform
         cd ../terraform
 
