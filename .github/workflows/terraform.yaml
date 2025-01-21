@@ -28,7 +28,7 @@ jobs:
         cd ../lambda
         pwd
         ls -la
-        zip -r9 lambda_function_payload.zip ./lambda_function_payload.py
+        zip -r9 lambda_function_payload.zip . -i ./lambda_function.py
         mv lambda_function_payload.zip ../terraform
         cd ../terraform
 
