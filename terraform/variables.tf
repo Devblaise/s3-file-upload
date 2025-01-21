@@ -33,3 +33,9 @@ variable "lambda_source_file" {
   type        = string
   default     = "./lambda_function_payload.zip"
 }
+
+variable "AWS_SECRET_ACCESS_KEY" {
+  description = "AWS secret access key for authentication"
+  type        = string
+  sensitive   = true
+}
