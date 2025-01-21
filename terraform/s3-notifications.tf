@@ -18,5 +18,5 @@ resource "aws_lambda_permission" "allow_bucket_in" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.file_processing_function.arn
   principal     = "s3.amazonaws.com"
-  source_arn    = "${aws_s3_bucket.bucket_in.arn}"
+  source_arn    = aws_s3_bucket.bucket_in.arn
 }
