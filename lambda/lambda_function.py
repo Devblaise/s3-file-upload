@@ -1,4 +1,5 @@
-import boto3
+import boto3 # type: ignore
+import time
 
 def lambda_handler(event, context):
     s3_resource = boto3.resource('s3')
@@ -19,11 +20,18 @@ def lambda_handler(event, context):
         key = record['s3']['object']['key']
         file_extension = key[key.rfind('.'):]
 
-        # Check if the file extension is supported and determine the output path
         if file_extension in supported_extensions:
-            output_file_path = supported_extensions[file_extension] + key
+            # Prepend a timestamp to avoid overwriting files
+            timestamp = int(time.time())
+            output_file_path = f"{supported_extensions[file_extension]}{timestamp}_{key}"
             copy_source = {'Bucket': input_bucket, 'Key': key}
-            s3_resource.meta.client.copy(copy_source, output_bucket_name, output_file_path)
-            print(f"File {key} copied to {output_bucket_name}/{output_file_path}")
+
+            try:
+                # Perform the copy operation
+                s3_resource.meta.client.copy(copy_source, output_bucket_name, output_file_path)
+                print(f"File {key} copied to {output_bucket_name}/{output_file_path}")
+            except Exception as e:
+                print(f"Error copying file {key}: {e}")
         else:
-            print(f"Skipping unsupported file extension: {key}")
+            print(f"Skipping unsupported file extension: {file_extension}")
+
