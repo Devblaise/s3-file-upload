@@ -3,5 +3,4 @@ resource "aws_iam_role_policy_attachment" "iam_policy" {
   # Just for testing purpose, don't try to give administrator access in production
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
   # policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-
 }
