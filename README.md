@@ -32,10 +32,10 @@ The system consists of the following components:
 
 ![Architecture Diagram](link-to-diagram-if-available)
 
-![s3](https://github.com/cloudcore-hub/s3-file-uploader/assets/88560609/9a8df75f-5da5-4d0a-9702-e804a217c0c4)
+# ![s3](https://github.com/cloudcore-hub/s3-file-uploader/assets/88560609/9a8df75f-5da5-4d0a-9702-e804a217c0c4)
 
 
-![Screenshot 2024-04-09 at 8 31 23 AM](https://github.com/cloudcore-hub/s3-file-uploader/assets/88560609/3425a32c-2281-4383-b4c8-04511d5ab033)
+# ![Screenshot 2024-04-09 at 8 31 23 AM](https://github.com/cloudcore-hub/s3-file-uploader/assets/88560609/3425a32c-2281-4383-b4c8-04511d5ab033)
 
 
 # AutoSort: Automated File Management and Organization System on AWS
