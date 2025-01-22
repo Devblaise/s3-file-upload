@@ -31,7 +31,7 @@ The system consists of the following components:
 - **Terraform**: Used to provision and manage AWS resources.
 
 
-![s3](https://raw.githubusercontent.com/Devblaise/s3-file-sort-system/refs/heads/main/src/assets/aws_s3_file_sort.png)
+![s3](https://github.com/Devblaise/s3-file-upload/blob/main/src/assets/aws_s3_file_sort.png?raw=true)
 
 
 
