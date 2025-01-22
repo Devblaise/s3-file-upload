@@ -30,12 +30,9 @@ The system consists of the following components:
 - **ReactJS Frontend**: A simple web application allowing users to upload files to `bucket-in`.
 - **Terraform**: Used to provision and manage AWS resources.
 
-![Architecture Diagram](link-to-diagram-if-available)
 
-# ![s3](https://github.com/cloudcore-hub/s3-file-uploader/assets/88560609/9a8df75f-5da5-4d0a-9702-e804a217c0c4)
+![s3](https://raw.githubusercontent.com/Devblaise/s3-file-sort-system/refs/heads/main/src/assets/aws_s3_file_sort.png)
 
-
-# ![Screenshot 2024-04-09 at 8 31 23 AM](https://github.com/cloudcore-hub/s3-file-uploader/assets/88560609/3425a32c-2281-4383-b4c8-04511d5ab033)
 
 
 # AutoSort: Automated File Management and Organization System on AWS
@@ -59,7 +56,7 @@ You can verify the installations by running `node -v` and `npm -v` in your termi
 
 
    ```
-   git clone https://github.com/cloudcore-hub/s3-file-uploader.git
+   https://github.com/Devblaise/s3-file-sort-system.git
    ```
 
 2. **Navigate to the Project Directory**
@@ -67,7 +64,7 @@ You can verify the installations by running `node -v` and `npm -v` in your termi
    Change to the project directory in your terminal:
 
    ```
-   cd s3-file-uploader
+   cd s3-file-sort-system
    ```
 
 
@@ -152,8 +149,8 @@ Be sure you have awscli in setup locally.
 
 run `aws s3 rm s3://<bucket-name> --recursive`
 ```
-aws s3 rm s3://cloudcore-s3-file-in --recursive
-aws s3 rm s3://cloudcore-s3-file-out --recursive
+aws s3 rm s3://s3-file-upload-in --recursive
+aws s3 rm s3://s3-file-upload-out --recursive
 ```
 
 ```
