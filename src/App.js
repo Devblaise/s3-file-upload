@@ -7,26 +7,38 @@ const S3_BUCKET = process.env.REACT_APP_AWS_S3_BUCKET;
 const REGION = process.env.REACT_APP_AWS_REGION;
 
 // AWS S3 configuration
-AWS.config.update({
-  accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-});
+const configureAWS = () => {
+  AWS.config.update({
+    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+    region: REGION
+  });
+};
+
+configureAWS();
 
 const myBucket = new AWS.S3({
-  params: { Bucket: S3_BUCKET },
-  region: REGION,
+  params: { Bucket: S3_BUCKET }
 });
 
 function App() {
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploadKey, setUploadKey] = useState(0); 
+  const [uploadProgress, setUploadProgress] = useState({});
+  const [loading, setLoading] = useState(false); 
   const fileInputRef = useRef(null); 
 
   const handleFileInput = (e) => {
     setSelectedFiles(Array.from(e.target.files)); 
-    setUploadProgress(0); 
+    setUploadProgress({});
+    setLoading(false);
     console.log("Files selected:", e.target.files);
+  };
+
+  const updateProgress = (fileName, progress) => {
+    setUploadProgress((prevProgress) => ({
+      ...prevProgress,
+      [fileName]: progress
+    }));
   };
 
   const uploadFiles = () => {
@@ -34,6 +46,8 @@ function App() {
       alert('Please select files to upload.');
       return;
     }
+
+    setLoading(true);
 
     selectedFiles.forEach((file) => {
       console.log('Uploading file:', file.name);
@@ -45,17 +59,20 @@ function App() {
 
       myBucket.putObject(params)
         .on('httpUploadProgress', (evt) => {
-          setUploadProgress(Math.round((evt.loaded / evt.total) * 100));
+          const progress = Math.round((evt.loaded / evt.total) * 100);
+          updateProgress(file.name, progress);
         })
         .send((err) => {
-          if (err) console.log(err);
-          else {
+          if (err) {
+            console.error("Error uploading file:", file.name, err);
+            alert(`Error uploading ${file.name}`);
+          } else {
             console.log("Successfully uploaded file:", file.name);
-            if (file === selectedFiles[selectedFiles.length - 1]) { 
-              alert("Successfully uploaded all files!");
-              setUploadKey(prevKey => prevKey + 1); 
-              setSelectedFiles([]); 
-            }
+          }
+          if (file === selectedFiles[selectedFiles.length - 1]) {
+            setLoading(false);
+            alert("Successfully uploaded all files!");
+            setSelectedFiles([]);
           }
         });
     });
@@ -65,11 +82,26 @@ function App() {
     <div className="App">
       <div className="upload-container">
         <h1>Upload Files to S3</h1>
-        {/* Add ref and key to input, change onChange to handleFileInput */}
-        <input type="file" multiple onChange={handleFileInput} ref={fileInputRef} key={uploadKey} />
-        <button onClick={uploadFiles}>Upload to S3</button>
+        <input 
+          type="file" 
+          multiple 
+          onChange={handleFileInput} 
+          ref={fileInputRef} 
+        />
+        <button onClick={uploadFiles} disabled={loading}>
+          {loading ? 'Uploading...' : 'Upload to S3'}
+        </button>
+
         <div className="progress-container">
-          <div className="progress-bar" style={{width: `${uploadProgress}%`}}></div>
+          {selectedFiles.map((file) => (
+            <div key={file.name} className="progress-bar-container">
+              <span>{file.name}</span>
+              <div 
+                className="progress-bar" 
+                style={{width: `${uploadProgress[file.name] || 0}%`}} 
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>

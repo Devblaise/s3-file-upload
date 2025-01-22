@@ -4,6 +4,13 @@
 /node_modules
 /.pnp
 .pnp.js
+cors.json
+policy.json
+
+#terraform
+terraform.tfstate
+terraform/.terraform.lock.hcl
+terraform/.terraform/
 
 # testing
 /coverage
